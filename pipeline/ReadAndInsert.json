@@ -17,7 +17,15 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "ProcessLogs",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"BlobContainer": {
+								"filename": {
+									"value": "@pipeline().parameters.filename",
+									"type": "Expression"
+								}
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -123,7 +131,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "BatchJobLogsDataSet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@pipeline().parameters.filename",
+								"type": "Expression"
+							}
+						}
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {
@@ -136,6 +150,10 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
+						"wildcardFileName": {
+							"value": "@{pipeline().parameters.filename}",
+							"type": "Expression"
+						},
 						"enablePartitionDiscovery": false
 					}
 				}

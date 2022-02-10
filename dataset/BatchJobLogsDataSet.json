@@ -23,40 +23,52 @@
 			},
 			"columnDelimiter": "\t",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
+				"name": "ID",
 				"type": "String"
 			},
 			{
+				"name": "Interface_ID",
 				"type": "String"
 			},
 			{
+				"name": "Date",
 				"type": "String"
 			},
 			{
+				"name": "Sequence",
 				"type": "String"
 			},
 			{
+				"name": "Start_time",
 				"type": "String"
 			},
 			{
+				"name": "End_Date",
 				"type": "String"
 			},
 			{
+				"name": "End_time",
 				"type": "String"
 			},
 			{
+				"name": "Start_Date",
 				"type": "String"
 			},
 			{
+				"name": "Status",
 				"type": "String"
 			},
 			{
+				"name": "Payroll_Period",
 				"type": "String"
 			},
 			{
+				"name": "Payroll_Year",
 				"type": "String"
 			}
 		]
