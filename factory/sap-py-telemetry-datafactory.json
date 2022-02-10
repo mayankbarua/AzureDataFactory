@@ -1,0 +1,9 @@
+{
+	"name": "sap-py-telemetry-datafactory",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "826c0351-027e-4069-9768-7de1569c749a",
+		"tenantId": "ea6bc761-fea7-44fd-9d9f-62fb7e143702"
+	}
+}
