@@ -14,6 +14,14 @@
 		"AzureSqlDatabase_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
+		"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"FileAddedToBlob_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
 		}
 	},
 	"variables": {
@@ -441,6 +449,38 @@
 				"[concat(variables('factoryId'), '/datasets/BatchJobLogsDataSet')]",
 				"[concat(variables('factoryId'), '/datasets/ArchivalFolder')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileAddedToBlob')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ReadAndInsert",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"filename": "[parameters('FileAddedToBlob_properties_ReadAndInsert_parameters_filename')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/batchjoblogs/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('FileAddedToBlob_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ReadAndInsert')]"
 			]
 		}
 	]

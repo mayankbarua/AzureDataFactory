@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
 		},
+		"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"FileAddedToBlob_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -47,6 +55,12 @@
 					},
 					"AzureSqlDatabase_connectionString": {
 						"value": "[parameters('AzureSqlDatabase_connectionString')]"
+					},
+					"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+						"value": "[parameters('FileAddedToBlob_properties_ReadAndInsert_parameters_filename')]"
+					},
+					"FileAddedToBlob_properties_typeProperties_scope": {
+						"value": "[parameters('FileAddedToBlob_properties_typeProperties_scope')]"
 					}
 				}
 			},
