@@ -1,0 +1,62 @@
+{
+	"name": "AzureSqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Interface_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Sequence",
+				"type": "varchar"
+			},
+			{
+				"name": "Start_time",
+				"type": "varchar"
+			},
+			{
+				"name": "End_Date",
+				"type": "varchar"
+			},
+			{
+				"name": "End_time",
+				"type": "varchar"
+			},
+			{
+				"name": "Start_Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Payroll_Period",
+				"type": "varchar"
+			},
+			{
+				"name": "Payroll_Year",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "batchJob"
+		}
+	}
+}
