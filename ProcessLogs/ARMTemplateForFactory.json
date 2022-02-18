@@ -15,11 +15,15 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
 		},
-		"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+		"FileAddedToBlob_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
+		},
+		"trigger1_properties_ReadAndInsert_parameters_filename": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
-		"FileAddedToBlob_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
 		}
@@ -586,6 +590,26 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/batchjoblogs/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('FileAddedToBlob_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
 				"runtimeState": "Started",
 				"pipelines": [
 					{
@@ -594,7 +618,7 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"filename": "[parameters('FileAddedToBlob_properties_ReadAndInsert_parameters_filename')]"
+							"filename": "[parameters('trigger1_properties_ReadAndInsert_parameters_filename')]"
 						}
 					}
 				],
@@ -602,7 +626,7 @@
 				"typeProperties": {
 					"blobPathBeginsWith": "/batchjoblogs/blobs/",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('FileAddedToBlob_properties_typeProperties_scope')]",
+					"scope": "[parameters('trigger1_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]

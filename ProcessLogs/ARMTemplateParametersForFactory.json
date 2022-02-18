@@ -11,10 +11,13 @@
 		"AzureSqlDatabase_connectionString": {
 			"value": ""
 		},
-		"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+		"FileAddedToBlob_properties_typeProperties_scope": {
+			"value": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
+		},
+		"trigger1_properties_ReadAndInsert_parameters_filename": {
 			"value": "@triggerBody().fileName"
 		},
-		"FileAddedToBlob_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"value": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
 		}
 	}
