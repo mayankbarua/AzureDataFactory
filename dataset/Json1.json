@@ -1,0 +1,124 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"container": "batchjoblogs"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"mandt": {
+					"type": "string"
+				},
+				"procs_id": {
+					"type": "string"
+				},
+				"ricefw_id": {
+					"type": "string"
+				},
+				"log_begda": {
+					"type": "string"
+				},
+				"seqno": {
+					"type": "string"
+				},
+				"rerun_seqno": {
+					"type": "string"
+				},
+				"log_begti": {
+					"type": "string"
+				},
+				"log_endda": {
+					"type": "string"
+				},
+				"log_endti": {
+					"type": "string"
+				},
+				"pay_begda": {
+					"type": "string"
+				},
+				"pay_endda": {
+					"type": "string"
+				},
+				"process_start": {
+					"type": "string"
+				},
+				"process_end": {
+					"type": "string"
+				},
+				"process_starttime": {
+					"type": "string"
+				},
+				"process_endtime": {
+					"type": "string"
+				},
+				"tot_records": {
+					"type": "string"
+				},
+				"suc_records": {
+					"type": "string"
+				},
+				"rej_records": {
+					"type": "string"
+				},
+				"avg_runtime": {
+					"type": "string"
+				},
+				"max_runtime": {
+					"type": "string"
+				},
+				"pabrp": {
+					"type": "string"
+				},
+				"pabrj": {
+					"type": "string"
+				},
+				"job_status": {
+					"type": "string"
+				},
+				"last_modified_date": {
+					"type": "string"
+				},
+				"last_modified_time": {
+					"type": "string"
+				},
+				"custom1": {
+					"type": "string"
+				},
+				"custom2": {
+					"type": "string"
+				},
+				"custom3": {
+					"type": "string"
+				},
+				"custom4": {
+					"type": "string"
+				},
+				"custom5": {
+					"type": "string"
+				},
+				"custom6": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

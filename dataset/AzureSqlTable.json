@@ -9,48 +9,128 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "ID",
+				"name": "mandt",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "Interface_ID",
+				"name": "procs_id",
 				"type": "varchar"
 			},
 			{
-				"name": "Date",
+				"name": "ricefw_id",
 				"type": "varchar"
 			},
 			{
-				"name": "Sequence",
+				"name": "log_begda",
 				"type": "varchar"
 			},
 			{
-				"name": "Start_time",
+				"name": "seqno",
 				"type": "varchar"
 			},
 			{
-				"name": "End_Date",
+				"name": "rerun_seqno",
 				"type": "varchar"
 			},
 			{
-				"name": "End_time",
+				"name": "log_begti",
 				"type": "varchar"
 			},
 			{
-				"name": "Start_Date",
+				"name": "log_endda",
 				"type": "varchar"
 			},
 			{
-				"name": "Status",
+				"name": "log_endti",
 				"type": "varchar"
 			},
 			{
-				"name": "Payroll_Period",
+				"name": "pay_begda",
 				"type": "varchar"
 			},
 			{
-				"name": "Payroll_Year",
+				"name": "pay_endda",
+				"type": "varchar"
+			},
+			{
+				"name": "process_start",
+				"type": "varchar"
+			},
+			{
+				"name": "process_end",
+				"type": "varchar"
+			},
+			{
+				"name": "process_starttime",
+				"type": "varchar"
+			},
+			{
+				"name": "process_endtime",
+				"type": "varchar"
+			},
+			{
+				"name": "tot_records",
+				"type": "varchar"
+			},
+			{
+				"name": "suc_records",
+				"type": "varchar"
+			},
+			{
+				"name": "rej_records",
+				"type": "varchar"
+			},
+			{
+				"name": "avg_runtime",
+				"type": "varchar"
+			},
+			{
+				"name": "max_runtime",
+				"type": "varchar"
+			},
+			{
+				"name": "pabrp",
+				"type": "varchar"
+			},
+			{
+				"name": "pabrj",
+				"type": "varchar"
+			},
+			{
+				"name": "job_status",
+				"type": "varchar"
+			},
+			{
+				"name": "last_modified_date",
+				"type": "varchar"
+			},
+			{
+				"name": "last_modified_time",
+				"type": "varchar"
+			},
+			{
+				"name": "custom1",
+				"type": "varchar"
+			},
+			{
+				"name": "custom2",
+				"type": "varchar"
+			},
+			{
+				"name": "custom3",
+				"type": "varchar"
+			},
+			{
+				"name": "custom4",
+				"type": "varchar"
+			},
+			{
+				"name": "custom5",
+				"type": "varchar"
+			},
+			{
+				"name": "custom6",
 				"type": "varchar"
 			}
 		],
