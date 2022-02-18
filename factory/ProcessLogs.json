@@ -1,0 +1,9 @@
+{
+	"name": "ProcessLogs",
+	"location": "westus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dfc45dd8-3331-4f6a-bdd7-7de8f9d0a154",
+		"tenantId": "ea6bc761-fea7-44fd-9d9f-62fb7e143702"
+	}
+}
