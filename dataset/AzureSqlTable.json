@@ -9,134 +9,33 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "mandt",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "procs_id",
+				"name": "A",
 				"type": "varchar"
 			},
 			{
-				"name": "ricefw_id",
+				"name": "B",
 				"type": "varchar"
 			},
 			{
-				"name": "log_begda",
+				"name": "C",
 				"type": "varchar"
 			},
 			{
-				"name": "seqno",
+				"name": "D",
 				"type": "varchar"
 			},
 			{
-				"name": "rerun_seqno",
+				"name": "E",
 				"type": "varchar"
 			},
 			{
-				"name": "log_begti",
-				"type": "varchar"
-			},
-			{
-				"name": "log_endda",
-				"type": "varchar"
-			},
-			{
-				"name": "log_endti",
-				"type": "varchar"
-			},
-			{
-				"name": "pay_begda",
-				"type": "varchar"
-			},
-			{
-				"name": "pay_endda",
-				"type": "varchar"
-			},
-			{
-				"name": "process_start",
-				"type": "varchar"
-			},
-			{
-				"name": "process_end",
-				"type": "varchar"
-			},
-			{
-				"name": "process_starttime",
-				"type": "varchar"
-			},
-			{
-				"name": "process_endtime",
-				"type": "varchar"
-			},
-			{
-				"name": "tot_records",
-				"type": "varchar"
-			},
-			{
-				"name": "suc_records",
-				"type": "varchar"
-			},
-			{
-				"name": "rej_records",
-				"type": "varchar"
-			},
-			{
-				"name": "avg_runtime",
-				"type": "varchar"
-			},
-			{
-				"name": "max_runtime",
-				"type": "varchar"
-			},
-			{
-				"name": "pabrp",
-				"type": "varchar"
-			},
-			{
-				"name": "pabrj",
-				"type": "varchar"
-			},
-			{
-				"name": "job_status",
-				"type": "varchar"
-			},
-			{
-				"name": "last_modified_date",
-				"type": "varchar"
-			},
-			{
-				"name": "last_modified_time",
-				"type": "varchar"
-			},
-			{
-				"name": "custom1",
-				"type": "varchar"
-			},
-			{
-				"name": "custom2",
-				"type": "varchar"
-			},
-			{
-				"name": "custom3",
-				"type": "varchar"
-			},
-			{
-				"name": "custom4",
-				"type": "varchar"
-			},
-			{
-				"name": "custom5",
-				"type": "varchar"
-			},
-			{
-				"name": "custom6",
+				"name": "F",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "batchJob"
+			"table": "test"
 		}
 	}
 }
