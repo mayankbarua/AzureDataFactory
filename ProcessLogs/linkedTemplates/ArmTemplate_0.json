@@ -1,0 +1,630 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ProcessLogs"
+		},
+		"AzureBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
+		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
+		"FileAddedToBlob_properties_ReadAndInsert_parameters_filename": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"FileAddedToBlob_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/5f3b6aa8-8a72-4b2c-83a4-d4b659a828ac/resourceGroups/MayankRG/providers/Microsoft.Storage/storageAccounts/sqlvasym2ljpgwydnk"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ArchivalFolder1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "archive"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "mandt",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "procs_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ricefw_id",
+						"type": "varchar"
+					},
+					{
+						"name": "log_begda",
+						"type": "varchar"
+					},
+					{
+						"name": "seqno",
+						"type": "varchar"
+					},
+					{
+						"name": "rerun_seqno",
+						"type": "varchar"
+					},
+					{
+						"name": "log_begti",
+						"type": "varchar"
+					},
+					{
+						"name": "log_endda",
+						"type": "varchar"
+					},
+					{
+						"name": "log_endti",
+						"type": "varchar"
+					},
+					{
+						"name": "pay_begda",
+						"type": "varchar"
+					},
+					{
+						"name": "pay_endda",
+						"type": "varchar"
+					},
+					{
+						"name": "process_start",
+						"type": "varchar"
+					},
+					{
+						"name": "process_end",
+						"type": "varchar"
+					},
+					{
+						"name": "process_starttime",
+						"type": "varchar"
+					},
+					{
+						"name": "process_endtime",
+						"type": "varchar"
+					},
+					{
+						"name": "tot_records",
+						"type": "varchar"
+					},
+					{
+						"name": "suc_records",
+						"type": "varchar"
+					},
+					{
+						"name": "rej_records",
+						"type": "varchar"
+					},
+					{
+						"name": "avg_runtime",
+						"type": "varchar"
+					},
+					{
+						"name": "max_runtime",
+						"type": "varchar"
+					},
+					{
+						"name": "pabrp",
+						"type": "varchar"
+					},
+					{
+						"name": "pabrj",
+						"type": "varchar"
+					},
+					{
+						"name": "job_status",
+						"type": "varchar"
+					},
+					{
+						"name": "last_modified_date",
+						"type": "varchar"
+					},
+					{
+						"name": "last_modified_time",
+						"type": "varchar"
+					},
+					{
+						"name": "custom1",
+						"type": "varchar"
+					},
+					{
+						"name": "custom2",
+						"type": "varchar"
+					},
+					{
+						"name": "custom3",
+						"type": "varchar"
+					},
+					{
+						"name": "custom4",
+						"type": "varchar"
+					},
+					{
+						"name": "custom5",
+						"type": "varchar"
+					},
+					{
+						"name": "custom6",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "batchJob"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BatchJobLogsDataSet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"container": "batchjoblogs"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"container": "batchjoblogs"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"mandt": {
+							"type": "string"
+						},
+						"procs_id": {
+							"type": "string"
+						},
+						"ricefw_id": {
+							"type": "string"
+						},
+						"log_begda": {
+							"type": "string"
+						},
+						"seqno": {
+							"type": "string"
+						},
+						"rerun_seqno": {
+							"type": "string"
+						},
+						"log_begti": {
+							"type": "string"
+						},
+						"log_endda": {
+							"type": "string"
+						},
+						"log_endti": {
+							"type": "string"
+						},
+						"pay_begda": {
+							"type": "string"
+						},
+						"pay_endda": {
+							"type": "string"
+						},
+						"process_start": {
+							"type": "string"
+						},
+						"process_end": {
+							"type": "string"
+						},
+						"process_starttime": {
+							"type": "string"
+						},
+						"process_endtime": {
+							"type": "string"
+						},
+						"tot_records": {
+							"type": "string"
+						},
+						"suc_records": {
+							"type": "string"
+						},
+						"rej_records": {
+							"type": "string"
+						},
+						"avg_runtime": {
+							"type": "string"
+						},
+						"max_runtime": {
+							"type": "string"
+						},
+						"pabrp": {
+							"type": "string"
+						},
+						"pabrj": {
+							"type": "string"
+						},
+						"job_status": {
+							"type": "string"
+						},
+						"last_modified_date": {
+							"type": "string"
+						},
+						"last_modified_time": {
+							"type": "string"
+						},
+						"custom1": {
+							"type": "string"
+						},
+						"custom2": {
+							"type": "string"
+						},
+						"custom3": {
+							"type": "string"
+						},
+						"custom4": {
+							"type": "string"
+						},
+						"custom5": {
+							"type": "string"
+						},
+						"custom6": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProcessLogs')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Json1",
+								"type": "DatasetReference"
+							},
+							"name": "BlobContainer"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSQLDB"
+						}
+					],
+					"transformations": [
+						{
+							"name": "UpdateOrInsert"
+						}
+					],
+					"script": "source(output(\n\t\tmandt as string,\n\t\tprocs_id as string,\n\t\tricefw_id as string,\n\t\tlog_begda as string,\n\t\tseqno as string,\n\t\trerun_seqno as string,\n\t\tlog_begti as string,\n\t\tlog_endda as string,\n\t\tlog_endti as string,\n\t\tpay_begda as string,\n\t\tpay_endda as string,\n\t\tprocess_start as string,\n\t\tprocess_end as string,\n\t\tprocess_starttime as string,\n\t\tprocess_endtime as string,\n\t\ttot_records as string,\n\t\tsuc_records as string,\n\t\trej_records as string,\n\t\tavg_runtime as string,\n\t\tmax_runtime as string,\n\t\tpabrp as string,\n\t\tpabrj as string,\n\t\tjob_status as string,\n\t\tlast_modified_date as string,\n\t\tlast_modified_time as string,\n\t\tcustom1 as string,\n\t\tcustom2 as string,\n\t\tcustom3 as string,\n\t\tcustom4 as string,\n\t\tcustom5 as string,\n\t\tcustom6 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'documentPerLine') ~> BlobContainer\nBlobContainer alterRow(upsertIf(mandt==mandt&&procs_id==procs_id)) ~> UpdateOrInsert\nUpdateOrInsert sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tmandt as integer,\n\t\tprocs_id as string,\n\t\tricefw_id as string,\n\t\tlog_begda as string,\n\t\tseqno as string,\n\t\trerun_seqno as string,\n\t\tlog_begti as string,\n\t\tlog_endda as string,\n\t\tlog_endti as string,\n\t\tpay_begda as string,\n\t\tpay_endda as string,\n\t\tprocess_start as string,\n\t\tprocess_end as string,\n\t\tprocess_starttime as string,\n\t\tprocess_endtime as string,\n\t\ttot_records as string,\n\t\tsuc_records as string,\n\t\trej_records as string,\n\t\tavg_runtime as string,\n\t\tmax_runtime as string,\n\t\tpabrp as string,\n\t\tpabrj as string,\n\t\tjob_status as string,\n\t\tlast_modified_date as string,\n\t\tlast_modified_time as string,\n\t\tcustom1 as string,\n\t\tcustom2 as string,\n\t\tcustom3 as string,\n\t\tcustom4 as string,\n\t\tcustom5 as string,\n\t\tcustom6 as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['mandt'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> AzureSQLDB"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Json1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ReadAndInsert')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "BlobToSQL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "ProcessLogs",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"BlobContainer": {
+										"filename": {
+											"value": "@pipeline().parameters.filename",
+											"type": "Expression"
+										}
+									},
+									"AzureSQLDB": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Copy data To Archive",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "BlobToSQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": {
+										"value": "@pipeline().parameters.filename",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ArchivalFolder1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ArchivalFolder1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DeleteFromRoot",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Copy data To Archive",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "BatchJobLogsDataSet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": {
+										"value": "@pipeline().parameters.filename",
+										"type": "Expression"
+									}
+								}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"wildcardFileName": {
+									"value": "@{pipeline().parameters.filename}",
+									"type": "Expression"
+								},
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/ProcessLogs')]",
+				"[concat(variables('factoryId'), '/datasets/ArchivalFolder1')]",
+				"[concat(variables('factoryId'), '/datasets/BatchJobLogsDataSet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileAddedToBlob')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ReadAndInsert",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"filename": "[parameters('FileAddedToBlob_properties_ReadAndInsert_parameters_filename')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/batchjoblogs/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('FileAddedToBlob_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ReadAndInsert')]"
+			]
+		}
+	]
+}
