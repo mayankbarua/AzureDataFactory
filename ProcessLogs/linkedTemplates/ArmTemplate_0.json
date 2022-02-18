@@ -117,134 +117,33 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "mandt",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "procs_id",
+						"name": "A",
 						"type": "varchar"
 					},
 					{
-						"name": "ricefw_id",
+						"name": "B",
 						"type": "varchar"
 					},
 					{
-						"name": "log_begda",
+						"name": "C",
 						"type": "varchar"
 					},
 					{
-						"name": "seqno",
+						"name": "D",
 						"type": "varchar"
 					},
 					{
-						"name": "rerun_seqno",
+						"name": "E",
 						"type": "varchar"
 					},
 					{
-						"name": "log_begti",
-						"type": "varchar"
-					},
-					{
-						"name": "log_endda",
-						"type": "varchar"
-					},
-					{
-						"name": "log_endti",
-						"type": "varchar"
-					},
-					{
-						"name": "pay_begda",
-						"type": "varchar"
-					},
-					{
-						"name": "pay_endda",
-						"type": "varchar"
-					},
-					{
-						"name": "process_start",
-						"type": "varchar"
-					},
-					{
-						"name": "process_end",
-						"type": "varchar"
-					},
-					{
-						"name": "process_starttime",
-						"type": "varchar"
-					},
-					{
-						"name": "process_endtime",
-						"type": "varchar"
-					},
-					{
-						"name": "tot_records",
-						"type": "varchar"
-					},
-					{
-						"name": "suc_records",
-						"type": "varchar"
-					},
-					{
-						"name": "rej_records",
-						"type": "varchar"
-					},
-					{
-						"name": "avg_runtime",
-						"type": "varchar"
-					},
-					{
-						"name": "max_runtime",
-						"type": "varchar"
-					},
-					{
-						"name": "pabrp",
-						"type": "varchar"
-					},
-					{
-						"name": "pabrj",
-						"type": "varchar"
-					},
-					{
-						"name": "job_status",
-						"type": "varchar"
-					},
-					{
-						"name": "last_modified_date",
-						"type": "varchar"
-					},
-					{
-						"name": "last_modified_time",
-						"type": "varchar"
-					},
-					{
-						"name": "custom1",
-						"type": "varchar"
-					},
-					{
-						"name": "custom2",
-						"type": "varchar"
-					},
-					{
-						"name": "custom3",
-						"type": "varchar"
-					},
-					{
-						"name": "custom4",
-						"type": "varchar"
-					},
-					{
-						"name": "custom5",
-						"type": "varchar"
-					},
-					{
-						"name": "custom6",
+						"name": "F",
 						"type": "varchar"
 					}
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "batchJob"
+					"table": "test"
 				}
 			},
 			"dependsOn": [
@@ -281,7 +180,32 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "A",
+						"type": "String"
+					},
+					{
+						"name": "B",
+						"type": "String"
+					},
+					{
+						"name": "C",
+						"type": "String"
+					},
+					{
+						"name": "D",
+						"type": "String"
+					},
+					{
+						"name": "E",
+						"type": "String"
+					},
+					{
+						"name": "F",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
@@ -449,7 +373,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Json1",
+								"referenceName": "BatchJobLogsDataSet",
 								"type": "DatasetReference"
 							},
 							"name": "BlobContainer"
@@ -469,11 +393,11 @@
 							"name": "UpdateOrInsert"
 						}
 					],
-					"script": "source(output(\n\t\tmandt as string,\n\t\tprocs_id as string,\n\t\tricefw_id as string,\n\t\tlog_begda as string,\n\t\tseqno as string,\n\t\trerun_seqno as string,\n\t\tlog_begti as string,\n\t\tlog_endda as string,\n\t\tlog_endti as string,\n\t\tpay_begda as string,\n\t\tpay_endda as string,\n\t\tprocess_start as string,\n\t\tprocess_end as string,\n\t\tprocess_starttime as string,\n\t\tprocess_endtime as string,\n\t\ttot_records as string,\n\t\tsuc_records as string,\n\t\trej_records as string,\n\t\tavg_runtime as string,\n\t\tmax_runtime as string,\n\t\tpabrp as string,\n\t\tpabrj as string,\n\t\tjob_status as string,\n\t\tlast_modified_date as string,\n\t\tlast_modified_time as string,\n\t\tcustom1 as string,\n\t\tcustom2 as string,\n\t\tcustom3 as string,\n\t\tcustom4 as string,\n\t\tcustom5 as string,\n\t\tcustom6 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'arrayOfDocuments') ~> BlobContainer\nBlobContainer alterRow(upsertIf(procs_id==procs_id)) ~> UpdateOrInsert\nUpdateOrInsert sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tmandt as integer,\n\t\tprocs_id as string,\n\t\tricefw_id as string,\n\t\tlog_begda as string,\n\t\tseqno as string,\n\t\trerun_seqno as string,\n\t\tlog_begti as string,\n\t\tlog_endda as string,\n\t\tlog_endti as string,\n\t\tpay_begda as string,\n\t\tpay_endda as string,\n\t\tprocess_start as string,\n\t\tprocess_end as string,\n\t\tprocess_starttime as string,\n\t\tprocess_endtime as string,\n\t\ttot_records as string,\n\t\tsuc_records as string,\n\t\trej_records as string,\n\t\tavg_runtime as string,\n\t\tmax_runtime as string,\n\t\tpabrp as string,\n\t\tpabrj as string,\n\t\tjob_status as string,\n\t\tlast_modified_date as string,\n\t\tlast_modified_time as string,\n\t\tcustom1 as string,\n\t\tcustom2 as string,\n\t\tcustom3 as string,\n\t\tcustom4 as string,\n\t\tcustom5 as string,\n\t\tcustom6 as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['procs_id'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> AzureSQLDB"
+					"script": "source(output(\n\t\tA as string,\n\t\tB as string,\n\t\tC as string,\n\t\tD as string,\n\t\tE as string,\n\t\tF as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> BlobContainer\nBlobContainer alterRow(upsertIf(A==A)) ~> UpdateOrInsert\nUpdateOrInsert sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tA as string,\n\t\tB as string,\n\t\tC as string,\n\t\tD as string,\n\t\tE as string,\n\t\tF as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['A'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> AzureSQLDB"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Json1')]",
+				"[concat(variables('factoryId'), '/datasets/BatchJobLogsDataSet')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable')]"
 			]
 		},
